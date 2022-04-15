@@ -5,7 +5,7 @@ Before proceeding with the simulating of the hardware device, a provision proces
 
 All communication should be secure and the orchestration of these two applications should be done using docker-compose.
 
-
+![diagram](diagram.png)
 
 ### You are provided with:
 - Empty repository with readme, with detailed explanation of the test
