@@ -1,9 +1,9 @@
 ## Scenario
-We want to simulate a hardware device that sends telemetry data to an IoT platform, [Thingsboard](https://github.com/thingsboard/thingsboard) in our case. All interactions with this platform should be done via the provided API that comes in two flavors: HTTPS and MQTTS.
+We want to simulate a hardware device that sends telemetry data to an IoT platform, [Thingsboard](https://github.com/thingsboard/thingsboard) in our case. All interactions with this platform should be done via the provided API that comes in two flavors: ***HTTPS*** and ***MQTTS***.
 
-Before proceeding with the simulating of the hardware device, a provision process should take place, meaning that a Thingsboard device should be created using the appropriate HTTP API call. Next step is uploading data to the Thingsboard server as device telemetry, using the MQTT API variant this time. Finally, we should be able to validate the results of previous steps by requesting telemetry data via the HTTP API.
+Before proceeding with the simulating of the hardware device, a provision process should take place, meaning that a Thingsboard device should be *created* using the appropriate HTTP API call. Next step is *uploading* data to the Thingsboard server as device telemetry, using the MQTT API variant this time. Finally, we should be able to validate the results of previous steps by *requesting* telemetry data via the HTTP API.
 
-All communication should be secure and the orchestration of these two applications should be done using docker-compose.
+All communication should be secure and the orchestration of these two applications should be done using ***docker-compose***.
 
 ![diagram](diagram.png)
 
