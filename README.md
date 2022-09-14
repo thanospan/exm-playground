@@ -13,7 +13,7 @@ flowchart LR
     P(Platform) <-->|HTTPS| B(Backend) <--> |HTTP| C(Client)
 ```
 
-##Assignment
+## Assignment
 Fork this Github repository, proceed with the development and ping us when you're ready!
 Happy coding :)
 
@@ -23,7 +23,7 @@ Happy coding :)
 - Tenant admin credentials 
 
 ### You need to deliver:
-1. `backend` 
+1. Backend application 
 
 A node express app with REST endpoints that will interact with a Thinsgboard server and respond appropriately to `client`:
   - Endpoint for device creation
@@ -31,7 +31,7 @@ A node express app with REST endpoints that will interact with a Thinsgboard ser
   - Endpoint for uploading telemetry
   - Endpoint for downloading telemetry: returns the aggregated (SUM per hour) telemetry data from a specific device
 
-2. `client`
+2. Client application
 
 A node app that makes use of the `backend` API that you created by:
   - creating a new device 
