@@ -9,3 +9,5 @@ devicesRouter.post('/',
   devicesValidator.validateType,
   devicesController.create
 );
+
+devicesRouter.delete('/:entityId/', devicesController.deleteById);
