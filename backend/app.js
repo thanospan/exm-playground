@@ -1,22 +1,16 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import { devicesRouter } from './routes/devices.js';
 
 dotenv.config({ path: './config/.env' });
 const app = express();
 
-const setup = () => {
-  app.get('/', (req, res) => {
-    res.send('Backend');
-  });
-};
+app.use(express.json());
 
-const start = () => {
-  const { BACKEND_PORT } = process.env;
+app.use('/devices', devicesRouter);
 
-  app.listen(BACKEND_PORT, () => {
-    console.log(`Backend listening on port ${BACKEND_PORT}`);
-  });
-};
+const { BACKEND_PORT } = process.env;
 
-setup();
-start();
+app.listen(BACKEND_PORT, () => {
+  console.log(`Backend listening on port ${BACKEND_PORT}`);
+});
