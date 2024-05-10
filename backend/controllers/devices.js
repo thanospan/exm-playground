@@ -1,8 +1,14 @@
+import { generateAccessToken } from '../utils/random.js';
+
 export const create = async (req, res, next) => {
   try {
-    const { THINGSBOARD_API_HOST, JWT, ACCESS_TOKEN } = process.env;
+    const { THINGSBOARD_API_HOST, JWT } = process.env;
+    let { accessToken } = req.query;
+    if (!accessToken) {
+      accessToken = generateAccessToken(20);
+    }
 
-    const provisionDeviceUri = THINGSBOARD_API_HOST + `/api/device?accessToken=${ACCESS_TOKEN}`;
+    const provisionDeviceUri = THINGSBOARD_API_HOST + `/api/device?accessToken=${accessToken}`;
 
     const platformReqHeaders = {
       'X-Authorization': `${JWT}`,
