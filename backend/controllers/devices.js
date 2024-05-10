@@ -1,13 +1,8 @@
 export const create = async (req, res, next) => {
   try {
-    const {
-      THINGSBOARD_API_HOST,
-      JWT,
-      WEATHER_STATION_DEV_KEY,
-      WEATHER_STATION_DEV_SECRET
-    } = process.env;
+    const { THINGSBOARD_API_HOST, JWT, ACCESS_TOKEN } = process.env;
 
-    const provisionEndpoint = THINGSBOARD_API_HOST + '/api/v1/provision';
+    const provisionDeviceUri = THINGSBOARD_API_HOST + `/api/device?accessToken=${ACCESS_TOKEN}`;
 
     const platformReqHeaders = {
       'X-Authorization': `${JWT}`,
@@ -15,12 +10,11 @@ export const create = async (req, res, next) => {
     };
 
     const platformReqBody = {
-      deviceName: req.body.name,
-      provisionDeviceKey: `${WEATHER_STATION_DEV_KEY}`,
-      provisionDeviceSecret: `${WEATHER_STATION_DEV_SECRET}`
+      name: req.body.name,
+      type: req.body.type
     };
     
-    const platformResponse = await fetch(provisionEndpoint, {
+    const platformResponse = await fetch(provisionDeviceUri, {
       method: 'POST',
       headers: platformReqHeaders,
       body: JSON.stringify(platformReqBody)
