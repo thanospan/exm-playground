@@ -36,6 +36,56 @@ export const create = async (req, res, next) => {
   }
 };
 
+export const uploadTelemetry = async (req, res, next) => {
+  try {
+    const { THINGSBOARD_API_HOST, JWT } = process.env;
+    const { entityId } = req.params;
+
+    const uploadTelemetryUri = THINGSBOARD_API_HOST + `/api/plugins/telemetry/DEVICE/${entityId}/timeseries/ANY`;
+
+    const platformReqHeaders = {
+      'X-Authorization': `${JWT}`,
+      'Content-Type': 'application/json'
+    };
+
+    const platformReqBody = req.body;
+    
+    const platformResponse = await fetch(uploadTelemetryUri, {
+      method: 'POST',
+      headers: platformReqHeaders,
+      body: JSON.stringify(platformReqBody)
+    });
+
+    if (platformResponse.ok) {
+      const response = {
+        status: 200,
+        message: 'Telemetry uploaded successfully'
+      };
+      console.log(response);
+      res.status(response.status).json(response);
+      return;
+    }
+
+    const contentType = platformResponse.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+        // If response is JSON, parse it as JSON
+        const platformResponseData = await platformResponse.json();
+        console.log(platformResponseData);
+        res.status(platformResponse.status).json(platformResponseData);
+        return;
+    } else {
+        // If response is not JSON, parse it as text
+        const platformResponseText = await platformResponse.text();
+        console.log(platformResponseText);
+        res.status(platformResponse.status).json(platformResponseText);
+        return;
+    }
+  } catch (error) {
+    console.error('Error: ', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 export const deleteById = async (req, res, next) => {
   try {
     const { THINGSBOARD_API_HOST, JWT } = process.env;

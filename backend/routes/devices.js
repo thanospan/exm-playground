@@ -10,4 +10,8 @@ devicesRouter.post('/',
   devicesController.create
 );
 
+devicesRouter.post('/:entityId/timeseries',
+  devicesController.uploadTelemetry
+);
+
 devicesRouter.delete('/:entityId/', devicesController.deleteById);
