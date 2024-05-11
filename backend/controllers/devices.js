@@ -56,9 +56,9 @@ export const deleteById = async (req, res, next) => {
     if (platformResponse.ok) {
       const response = {
         status: platformResponse.status,
-        message: 'Device deleted successfully!'
+        message: 'Device deleted successfully'
       };
-      console.log(await platformResponse);
+      console.log(response);
       res.status(response.status).json(response);
       return;
     }

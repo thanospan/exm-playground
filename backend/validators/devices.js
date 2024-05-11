@@ -4,11 +4,11 @@ export const validateName = (req, res, next) => {
 
   if (!name) {
     response = {
-      statusCode: 400,
+      status: 400,
       message: `Missing required body parameter 'name'`
     };
     console.log(response);
-    res.status(response.statusCode).json(response);
+    res.status(response.status).json(response);
     return;
   }
 
@@ -21,11 +21,11 @@ export const validateType = (req, res, next) => {
 
   if (!type) {
     response = {
-      statusCode: 400,
+      status: 400,
       message: `Missing required body parameter 'type'`
     };
     console.log(response);
-    res.status(response.statusCode).json(response);
+    res.status(response.status).json(response);
     return;
   }
 
