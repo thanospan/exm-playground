@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: exm-playground-backend
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3004:3004
+    env_file:
+      - ./backend/config/.env
+
+  client:
+    build:
+      context: ./client
+    container_name: exm-playground-client
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - backend
+    env_file:
+      - ./client/config/.env
+
+networks:
+  default:
+    name: exm-playground
