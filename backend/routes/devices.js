@@ -10,11 +10,11 @@ devicesRouter.post('/',
   devicesController.create
 );
 
-devicesRouter.post('/:entityId/timeseries',
+devicesRouter.post('/:entityId/telemetry',
   devicesController.uploadTelemetry
 );
 
-devicesRouter.get('/:entityId/timeseries',
+devicesRouter.get('/:entityId/telemetry',
   devicesController.downloadTelemetry
 );
 

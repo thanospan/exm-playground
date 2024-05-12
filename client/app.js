@@ -50,7 +50,7 @@ const waitMillis = async (millis) => {
 };
 
 const sendMeasurements = async (entityId, measurements) => {
-  const uri = `http://${BACKEND_HOST}:${BACKEND_PORT}/devices/${entityId}/timeseries`;
+  const uri = `http://${BACKEND_HOST}:${BACKEND_PORT}/devices/${entityId}/telemetry`;
   const response = await fetch(uri, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
