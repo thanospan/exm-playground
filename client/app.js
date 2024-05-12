@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import { parse } from 'csv-parse';
+import { getRandomInt } from './utils/random.js';
 
 dotenv.config({ path: './config/.env' });
 
@@ -14,9 +15,11 @@ const createDevice = async () => {
       'Content-Type': 'application/json'
     };
 
+    const randomInt = getRandomInt(1, 1000);
+
     const body = {
-      name: "Weather Station 1",
-      type: "Weather Station"
+      name: `Weather Station ${randomInt}`,
+      type: 'Weather Station'
     };
     
     const response = await fetch(uri, {
