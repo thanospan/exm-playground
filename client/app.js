@@ -88,7 +88,15 @@ const processFile = async (filepath, entityId) => {
       records.length = 0;
     }
   }
-  return records;
+
+  // Send remaining records
+  if (records.length) {
+    await waitMillis(1000);
+    await sendMeasurements(entityId, records);
+    records.length = 0;
+  }
+
+  return;
 };
 
 (async () => {
