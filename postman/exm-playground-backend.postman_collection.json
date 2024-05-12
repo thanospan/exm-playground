@@ -1,0 +1,179 @@
+{
+	"info": {
+		"_postman_id": "6463fe73-568c-436d-bb49-4e8fb0cb5ecd",
+		"name": "EXM Playground - Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9776101"
+	},
+	"item": [
+		{
+			"name": "Create device",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Weather Station 1\",\r\n  \"type\": \"Weather Station\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backend}}/devices",
+					"host": [
+						"{{backend}}"
+					],
+					"path": [
+						"devices"
+					],
+					"query": [
+						{
+							"key": "accessToken",
+							"value": "{{accessToken}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload telemetry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ts\": 1648919855000,\r\n  \"values\": {\r\n    \"temperature\": 48.29999924,\r\n    \"humidity\": 52,\r\n    \"pressure\": 1008.74939,\r\n    \"wind_speed\": 0.128800005,\r\n    \"wind_gust\": 0.50999999,\r\n    \"wind_direction\": 80\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backend}}/devices/fa614e30-106f-11ef-96af-5769deaadabc/telemetry",
+					"host": [
+						"{{backend}}"
+					],
+					"path": [
+						"devices",
+						"fa614e30-106f-11ef-96af-5769deaadabc",
+						"telemetry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download telemetry",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{backend}}/devices/fa614e30-106f-11ef-96af-5769deaadabc/telemetry",
+					"host": [
+						"{{backend}}"
+					],
+					"path": [
+						"devices",
+						"fa614e30-106f-11ef-96af-5769deaadabc",
+						"telemetry"
+					],
+					"query": [
+						{
+							"key": "keys",
+							"value": "temperature",
+							"disabled": true
+						},
+						{
+							"key": "startTs",
+							"value": "1648760400000",
+							"disabled": true
+						},
+						{
+							"key": "endTs",
+							"value": "1649970000000",
+							"disabled": true
+						},
+						{
+							"key": "agg",
+							"value": "NONE",
+							"disabled": true
+						},
+						{
+							"key": "interval",
+							"value": "16000",
+							"disabled": true
+						},
+						{
+							"key": "intervalType",
+							"value": "MILLISECONDS",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "75000",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete device by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{backend}}/devices/fa614e30-106f-11ef-96af-5769deaadabc",
+					"host": [
+						"{{backend}}"
+					],
+					"path": [
+						"devices",
+						"fa614e30-106f-11ef-96af-5769deaadabc"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "backend",
+			"value": "localhost:3004",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "a9hd8f7ahs8d7fas9as",
+			"type": "string"
+		}
+	]
+}

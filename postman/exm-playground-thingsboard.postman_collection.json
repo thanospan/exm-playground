@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "93100150-29bf-4d7a-a0f5-7c9d21072819",
+		"name": "EXM Playground - ThingsBoard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9776101"
+	},
+	"item": [
+		{
+			"name": "Create device",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "{{jwt}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Weather Station 1\",\r\n  \"type\": \"Weather Station\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{thingsboard}}/api/device?accessToken={{accessToken}}",
+					"host": [
+						"{{thingsboard}}"
+					],
+					"path": [
+						"api",
+						"device"
+					],
+					"query": [
+						{
+							"key": "accessToken",
+							"value": "{{accessToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload telemetry (accessToken)",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "secret",
+							"value": "{{jwt}}",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "payload",
+							"value": "{}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ts\": 1649614020000,\r\n  \"values\": {\r\n    \"temperature\": 16.70000076,\r\n    \"humidity\": 63,\r\n    \"pressure\": 1006.48877,\r\n    \"wind_speed\": 4.830000401,\r\n    \"wind_gust\": 6.119999886,\r\n    \"wind_direction\": 234\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{thingsboard}}/api/v1/{{accessToken}}/telemetry",
+					"host": [
+						"{{thingsboard}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"{{accessToken}}",
+						"telemetry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload telemetry (entityId)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "{{jwt}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ts\": 1648760415000,\r\n  \"values\": {\r\n    \"temperature\": 22.39999962,\r\n    \"humidity\": 25,\r\n    \"pressure\": 1004.607483,\r\n    \"wind_speed\": 2.44720006,\r\n    \"wind_gust\": 3.059999943,\r\n    \"wind_direction\": 157\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{thingsboard}}/api/plugins/telemetry/DEVICE/54e1fca0-1071-11ef-96af-5769deaadabc/timeseries/ANY",
+					"host": [
+						"{{thingsboard}}"
+					],
+					"path": [
+						"api",
+						"plugins",
+						"telemetry",
+						"DEVICE",
+						"54e1fca0-1071-11ef-96af-5769deaadabc",
+						"timeseries",
+						"ANY"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download telemetry",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "{{jwt}}"
+					}
+				],
+				"url": {
+					"raw": "{{thingsboard}}/api/plugins/telemetry/DEVICE/54e1fca0-1071-11ef-96af-5769deaadabc/values/timeseries?keys=temperature&startTs=1648760414999&endTs=1649969969001&agg=NONE&interval=16000&intervalType=MILLISECONDS&limit=500",
+					"host": [
+						"{{thingsboard}}"
+					],
+					"path": [
+						"api",
+						"plugins",
+						"telemetry",
+						"DEVICE",
+						"54e1fca0-1071-11ef-96af-5769deaadabc",
+						"values",
+						"timeseries"
+					],
+					"query": [
+						{
+							"key": "keys",
+							"value": "temperature"
+						},
+						{
+							"key": "startTs",
+							"value": "1648760414999"
+						},
+						{
+							"key": "endTs",
+							"value": "1649969969001"
+						},
+						{
+							"key": "agg",
+							"value": "NONE"
+						},
+						{
+							"key": "interval",
+							"value": "16000"
+						},
+						{
+							"key": "intervalType",
+							"value": "MILLISECONDS"
+						},
+						{
+							"key": "limit",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete device",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "{{jwt}}"
+					}
+				],
+				"url": {
+					"raw": "{{thingsboard}}/api/device/54e1fca0-1071-11ef-96af-5769deaadabc",
+					"host": [
+						"{{thingsboard}}"
+					],
+					"path": [
+						"api",
+						"device",
+						"54e1fca0-1071-11ef-96af-5769deaadabc"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "thingsboard",
+			"value": "https://demo.thingsboard.io",
+			"type": "string"
+		},
+		{
+			"key": "jwt",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "9asfha8s7d9fhaisdyuf",
+			"type": "string"
+		}
+	]
+}
