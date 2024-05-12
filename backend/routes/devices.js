@@ -14,4 +14,8 @@ devicesRouter.post('/:entityId/timeseries',
   devicesController.uploadTelemetry
 );
 
+devicesRouter.get('/:entityId/timeseries',
+  devicesController.downloadTelemetry
+);
+
 devicesRouter.delete('/:entityId/', devicesController.deleteById);
