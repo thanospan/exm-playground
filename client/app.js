@@ -93,7 +93,7 @@ const processFile = async (filepath, entityId) => {
     const createDeviceResponse = await createDevice();
     console.log(createDeviceResponse);
   
-    await processFile('../data.csv', createDeviceResponse.response.id.id);
+    await processFile('./data.csv', createDeviceResponse.response.id.id);
   } catch (error) {
     console.error(error);
   }
