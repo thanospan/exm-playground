@@ -1,5 +1,10 @@
-# Backend Assignment
-A small - and hopefully - fun exercise
+# EXM Backend Assignment
+
+## Architecture
+```mermaid
+flowchart LR
+    P(Platform) <-->|HTTPS| B(Backend) <--> |HTTP| C(Client)
+```
 
 ## Scenario
 We want to simulate a hardware device (`client`) that provisions itself and sends weather data to an IoT `platform`. 
@@ -8,36 +13,48 @@ In order to hide the internals of this platform and provide a friendlier API we 
 - Create/delete a device 
 - Upload/download telemetry data
 
-```mermaid
-flowchart LR
-    P(Platform) <-->|HTTPS| B(Backend) <--> |HTTP| C(Client)
+## Requirements
+- [Docker 26.1.1, build 4cf5afa](https://www.docker.com/)
+
+## Usage
+- Clone this repository:
+```
+git clone https://github.com/thanospan/exm-playground.git
+cd exm-playground
 ```
 
-## Assignment
-Fork this Github repository, proceed with the development and ping us when you're ready!
-Happy coding :)
+- Switch to the `dev` branch:
+```
+git checkout dev
+```
 
-### You are provided with:
-- Repository with detailed explanation of the test and a dataset in CSV format
-- Thingsboard server url 
-- Tenant admin credentials 
+- Update env variables:
+```
+cp backend/config/.env.example backend/config/.env
+nano backend/config/.env
 
-### You need to deliver:
-1. Backend application 
+cp client/config/.env.example client/config/.env
+nano client/config/.env
+```
 
-A node express app with REST endpoints that will interact with a Thinsgboard server and respond appropriately to `client`:
-  - Endpoint for device creation
-  - Endpoint for device deletion
-  - Endpoint for uploading telemetry
-  - Endpoint for downloading telemetry: returns the aggregated (SUM per hour) telemetry data from a specific device
+- Run:
+```
+docker compose up
+```
 
-2. Client application
+## Backend
+All URIs are relative to *http://localhost:3004*
 
-A node app that makes use of the `backend` API that you created by:
-  - creating a new device 
-  - uploading data from the CSV file (data.csv) as telemetry to that device (use as many requests as you deem fit)
+| HTTP Method | Endpoint |  Parameters |
+| ----------- | -------- | ---------- |
+| POST | /devices | query: accessToken (optional - default: random generated)<br> body: name, type |
+| POST | /devices/:entityId/telemetry | params: entityId<br> body: Single measurement or array of measurements |
+| GET | /devices/:entityId/telemetry | params: entityId<br> query:<br> keys (default: temperature,humidity,pressure,wind_speed,wind_gust,wind_direction)<br> startTs (default: 1648760400000 - Friday, April 1, 2022 12:00:00 AM)<br> endTs (default: 1649970000000 - Friday, April 15, 2022 12:00:00 AM)<br> agg (MIN, MAX, AVG, SUM, COUNT, NONE - default: SUM)<br> interval (default: 3600000 ms - 1 hour)<br> intervalType (MILLISECONDS, WEEK, WEEK_ISO, MONTH, QUARTER - default: MILLISECONDS)<br> limit (default: 336) |
+| DELETE | /devices/:entityId |  |
 
-### Requirements
-  - All interactions between `backend` and the `platform` should be done via the ***HTTP*** API
-  - Both apps should be containerized and wrapped in ***docker-compose*** script for easy deployment
-  - All code should be available in the repository
+A Postman collection is provided in the `postman` directory.
+
+## Client
+- The `client` creates a new device by sending a `POST` request to the `/devices` endpoint of the `backend`.
+- The `client` reads the data from the csv file and sends 225 measurements (16000 ms interval between measurements in data.csv, 3600000 ms in 1 hour, 3600000 / 16000 = 225) to the `backend` by sending `POST` requests to the `/devices/:entityId/telemetry` endpoint.
+- The aggregated data (sum per hour) can be retrieved by sending a `GET` request to the `/devices/:entityId/telemetry` endpoint of the `backend`. Charts from a ThingsBoard dashboard can be found in the `charts` directory.
